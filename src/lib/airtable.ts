@@ -115,21 +115,27 @@ export async function fetchListings(options?: FetchListingsOptions): Promise<{ r
   const allRecords: Listing[] = [];
   let offset: string | undefined;
 
-  do {
-    if (offset) params.set('offset', offset);
-    const res = await fetch(`${AIRTABLE_URL}?${params}`, {
-      headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}` },
-      next: { revalidate: 60 },
-    });
+  try {
+    do {
+      if (offset) params.set('offset', offset);
+      const res = await fetch(`${AIRTABLE_URL}?${params}`, {
+        headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}` },
+        next: { revalidate: 60 },
+      });
 
-    if (!res.ok) {
-      throw new Error(`Airtable error: ${res.status} ${res.statusText}`);
-    }
+      if (!res.ok) {
+        console.error(`Airtable error: ${res.status} ${res.statusText}`);
+        return { records: [], total: 0 };
+      }
 
-    const data = await res.json();
-    allRecords.push(...data.records.map(mapRecord));
-    offset = data.offset;
-  } while (offset);
+      const data = await res.json();
+      allRecords.push(...data.records.map(mapRecord));
+      offset = data.offset;
+    } while (offset);
+  } catch (err) {
+    console.error('fetchListings failed:', err);
+    return { records: [], total: 0 };
+  }
 
   return { records: allRecords, total: allRecords.length };
 }

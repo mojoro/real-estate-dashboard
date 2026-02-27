@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { fetchListings } from '@/lib/airtable';
 import { PipelineClient } from '@/components/pages/PipelineClient';
 
