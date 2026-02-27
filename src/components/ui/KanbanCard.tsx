@@ -39,13 +39,13 @@ export function KanbanCard({ listing, onClick }: KanbanCardProps) {
         {/* Drag handle */}
         <button
           {...listeners}
-          className="cursor-grab active:cursor-grabbing p-0.5 text-gray-500 hover:text-gray-300 transition-colors touch-none"
+          className="cursor-grab active:cursor-grabbing p-0.5 text-gray-500 hover:text-gray-300 transition-colors touch-none w-full flex items-center justify-end gap-2"
           aria-label="Drag to reorder"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
           </svg>
-        </button>
+        
         <div className="flex items-center justify-between flex-1 min-w-0">
           <StatusBadge status={listing.status} />
           <YieldDisplay
@@ -54,6 +54,7 @@ export function KanbanCard({ listing, onClick }: KanbanCardProps) {
             size="sm"
           />
         </div>
+        </button>
       </div>
       <button
         onClick={onClick}
