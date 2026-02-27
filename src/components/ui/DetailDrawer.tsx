@@ -35,11 +35,18 @@ export function DetailDrawer({ listing, isOpen, onClose }: DetailDrawerProps) {
         onClick={onClose}
       />
 
-      {/* Drawer */}
+      {/* Drawer — bottom sheet on mobile, right panel on sm+ */}
       <div
         className={cn(
-          'fixed top-0 right-0 h-full w-[520px] max-w-[90vw] bg-gray-900 border-l border-gray-800 z-50 overflow-y-auto transition-transform duration-300 ease-in-out',
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+          'fixed z-50 overflow-y-auto transition-transform duration-300 ease-in-out bg-gray-900',
+          // Mobile: bottom sheet
+          'bottom-0 left-0 right-0 h-[85vh] rounded-t-2xl border-t border-gray-800',
+          // Desktop: right panel
+          'sm:top-0 sm:right-0 sm:left-auto sm:bottom-auto sm:h-full sm:w-[520px] sm:rounded-none sm:border-t-0 sm:border-l sm:border-gray-800',
+          // Transforms
+          isOpen
+            ? 'translate-y-0 sm:translate-y-0 sm:translate-x-0'
+            : 'translate-y-full sm:translate-y-0 sm:translate-x-full'
         )}
       >
         {listing && (
@@ -62,7 +69,7 @@ export function DetailDrawer({ listing, isOpen, onClose }: DetailDrawerProps) {
               </div>
               <button
                 onClick={onClose}
-                className="text-gray-500 hover:text-gray-300 transition-colors p-1"
+                className="text-gray-500 hover:text-gray-300 transition-colors p-2 rounded-lg hover:bg-gray-800"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -72,25 +79,25 @@ export function DetailDrawer({ listing, isOpen, onClose }: DetailDrawerProps) {
 
             {/* Key Metrics */}
             <div className="grid grid-cols-3 gap-3 mb-6">
-              <div className="bg-gray-800/50 rounded-lg p-3">
-                <p className="text-xs text-gray-500 mb-0.5">Kaufpreis</p>
+              <div className="bg-gray-800 rounded-lg p-3">
+                <p className="text-xs text-gray-400 mb-0.5">Kaufpreis</p>
                 <p className="text-sm font-bold text-white">{formatPrice(listing.purchase_price)}</p>
               </div>
-              <div className="bg-gray-800/50 rounded-lg p-3">
-                <p className="text-xs text-gray-500 mb-0.5">€/m²</p>
+              <div className="bg-gray-800 rounded-lg p-3">
+                <p className="text-xs text-gray-400 mb-0.5">€/m²</p>
                 <p className="text-sm font-bold text-white">
                   {listing.price_per_sqm ? `${listing.price_per_sqm.toLocaleString('de-DE')} €` : '—'}
                 </p>
               </div>
-              <div className="bg-gray-800/50 rounded-lg p-3">
-                <p className="text-xs text-gray-500 mb-0.5">Fläche</p>
+              <div className="bg-gray-800 rounded-lg p-3">
+                <p className="text-xs text-gray-400 mb-0.5">Fläche</p>
                 <p className="text-sm font-bold text-white">{formatArea(listing.living_area)}</p>
               </div>
             </div>
 
             {/* Property Details */}
             <div className="mb-6">
-              <h3 className="text-xs text-gray-500 uppercase tracking-wider font-medium mb-3">
+              <h3 className="text-xs text-gray-400 uppercase tracking-wider font-medium mb-3">
                 Objektdaten
               </h3>
               <div className="grid grid-cols-2 gap-y-3 gap-x-4 text-sm">
@@ -111,7 +118,7 @@ export function DetailDrawer({ listing, isOpen, onClose }: DetailDrawerProps) {
             {/* AI Analysis */}
             {listing.summary && (
               <div className="mb-6">
-                <h3 className="text-xs text-gray-500 uppercase tracking-wider font-medium mb-3">
+                <h3 className="text-xs text-gray-400 uppercase tracking-wider font-medium mb-3">
                   AI-Analyse
                 </h3>
                 <p className="text-sm text-gray-300 leading-relaxed">
@@ -123,7 +130,7 @@ export function DetailDrawer({ listing, isOpen, onClose }: DetailDrawerProps) {
             {/* Risks */}
             {parseRisks(listing.risks).length > 0 && (
               <div className="mb-6">
-                <h3 className="text-xs text-gray-500 uppercase tracking-wider font-medium mb-3">
+                <h3 className="text-xs text-gray-400 uppercase tracking-wider font-medium mb-3">
                   Risiken
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -142,7 +149,7 @@ export function DetailDrawer({ listing, isOpen, onClose }: DetailDrawerProps) {
             {/* Reason */}
             {listing.reason && (
               <div className="mb-6">
-                <h3 className="text-xs text-gray-500 uppercase tracking-wider font-medium mb-3">
+                <h3 className="text-xs text-gray-400 uppercase tracking-wider font-medium mb-3">
                   Begründung
                 </h3>
                 <p className="text-sm text-gray-400 leading-relaxed">
@@ -154,7 +161,7 @@ export function DetailDrawer({ listing, isOpen, onClose }: DetailDrawerProps) {
             {/* Agent Info */}
             {(listing['Agent Name'] || listing['Agent Email'] || listing['Agent Phone']) && (
               <div className="mb-6">
-                <h3 className="text-xs text-gray-500 uppercase tracking-wider font-medium mb-3">
+                <h3 className="text-xs text-gray-400 uppercase tracking-wider font-medium mb-3">
                   Makler
                 </h3>
                 <div className="text-sm text-gray-300 space-y-1">
@@ -167,7 +174,7 @@ export function DetailDrawer({ listing, isOpen, onClose }: DetailDrawerProps) {
 
             {/* Pipeline & Meta */}
             <div className="mb-6">
-              <h3 className="text-xs text-gray-500 uppercase tracking-wider font-medium mb-3">
+              <h3 className="text-xs text-gray-400 uppercase tracking-wider font-medium mb-3">
                 Status & Meta
               </h3>
               <div className="grid grid-cols-2 gap-y-3 gap-x-4 text-sm">
@@ -181,7 +188,7 @@ export function DetailDrawer({ listing, isOpen, onClose }: DetailDrawerProps) {
             {/* Notes */}
             {listing.Notes && (
               <div className="mb-6">
-                <h3 className="text-xs text-gray-500 uppercase tracking-wider font-medium mb-3">
+                <h3 className="text-xs text-gray-400 uppercase tracking-wider font-medium mb-3">
                   Notizen
                 </h3>
                 <p className="text-sm text-gray-400 bg-gray-800/50 rounded-lg p-3">
@@ -209,7 +216,7 @@ export function DetailDrawer({ listing, isOpen, onClose }: DetailDrawerProps) {
 function Detail({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div>
-      <p className="text-gray-500 text-xs">{label}</p>
+      <p className="text-gray-400 text-xs">{label}</p>
       <div className="text-gray-200">{value}</div>
     </div>
   );

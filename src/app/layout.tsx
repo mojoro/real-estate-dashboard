@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Sidebar } from "@/components/layout/Sidebar";
+import { SidebarProvider } from "@/components/layout/SidebarContext";
+import { MobileHeader } from "@/components/layout/MobileHeader";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,12 +17,17 @@ export default function RootLayout({
   return (
     <html lang="de">
       <body className="flex h-screen overflow-hidden bg-gray-950 text-gray-50 antialiased">
-        <Sidebar />
-        <main className="flex-1 overflow-y-auto">
-          <div className="p-6 max-w-[1600px] mx-auto">
-            {children}
+        <SidebarProvider>
+          <Sidebar />
+          <div className="flex-1 flex flex-col min-w-0">
+            <MobileHeader />
+            <main className="flex-1 overflow-y-auto">
+              <div className="p-4 sm:p-6 max-w-[1600px] mx-auto">
+                {children}
+              </div>
+            </main>
           </div>
-        </main>
+        </SidebarProvider>
       </body>
     </html>
   );

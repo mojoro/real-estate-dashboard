@@ -94,7 +94,7 @@ export function ListingTable({ listings, onSelectListing }: ListingTableProps) {
           placeholder="Adresse suchen..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="bg-gray-900 border border-gray-800 rounded-lg px-3 py-1.5 text-sm text-gray-200 placeholder:text-gray-600 focus:outline-none focus:border-gray-600 w-64"
+          className="bg-gray-900 border border-gray-800 rounded-lg px-3 py-1.5 text-sm text-gray-200 placeholder:text-gray-500 focus:outline-none focus:border-gray-600 w-full sm:w-64"
         />
       </div>
 
@@ -123,8 +123,8 @@ export function ListingTable({ listings, onSelectListing }: ListingTableProps) {
               >
                 Fläche <SortIcon field="living_area" />
               </th>
-              <th className="px-4 py-3 font-medium">Energie</th>
-              <th className="px-4 py-3 font-medium">Analysiert</th>
+              <th className="px-4 py-3 font-medium hidden md:table-cell">Energie</th>
+              <th className="px-4 py-3 font-medium hidden md:table-cell">Analysiert</th>
               <th className="px-4 py-3 font-medium">Aktionen</th>
             </tr>
           </thead>
@@ -165,10 +165,10 @@ export function ListingTable({ listings, onSelectListing }: ListingTableProps) {
                 <td className="px-4 py-3 text-gray-300 whitespace-nowrap">
                   {formatArea(listing.living_area)}
                 </td>
-                <td className="px-4 py-3">
+                <td className="px-4 py-3 hidden md:table-cell">
                   <EnergyBadge energyClass={listing.energy_class} />
                 </td>
-                <td className="px-4 py-3 text-gray-400 text-xs whitespace-nowrap">
+                <td className="px-4 py-3 text-gray-400 text-xs whitespace-nowrap hidden md:table-cell">
                   {formatDate(listing.analyzed_at)}
                 </td>
                 <td className="px-4 py-3">
@@ -195,7 +195,7 @@ export function ListingTable({ listings, onSelectListing }: ListingTableProps) {
         </table>
       </div>
 
-      <p className="text-xs text-gray-600 mt-3">
+      <p className="text-xs text-gray-400 mt-3">
         {filtered.length} von {listings.length} Einträgen
       </p>
     </div>

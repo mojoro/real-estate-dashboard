@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { useSidebar } from './SidebarContext';
 
 const NAV_ITEMS = [
   {
@@ -36,56 +37,76 @@ const NAV_ITEMS = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const { isOpen, close } = useSidebar();
 
   return (
-    <aside className="w-64 bg-gray-900 border-r border-gray-800 flex flex-col h-screen shrink-0">
-      {/* Logo */}
-      <div className="p-6 border-b border-gray-800">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-            <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3H21m-3.75 3H21" />
-            </svg>
-          </div>
-          <div>
-            <h1 className="text-sm font-bold text-white tracking-wide">RE Screener</h1>
-            <p className="text-xs text-gray-500">Berlin Investment</p>
+    <>
+      {/* Mobile backdrop */}
+      <div
+        className={cn(
+          'fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 lg:hidden',
+          isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        )}
+        onClick={close}
+      />
+
+      {/* Sidebar */}
+      <aside
+        className={cn(
+          'fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 border-r border-gray-800 flex flex-col h-screen shrink-0 transition-transform duration-300 ease-in-out',
+          'lg:static lg:translate-x-0',
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        )}
+      >
+        {/* Logo */}
+        <div className="p-6 border-b border-gray-800">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+              <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3H21m-3.75 3H21" />
+              </svg>
+            </div>
+            <div>
+              <h1 className="text-base font-bold text-white tracking-wide">RE Screener</h1>
+              <p className="text-xs text-gray-400">Berlin Investment</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-1">
-        {NAV_ITEMS.map((item) => {
-          const isActive = item.href === '/'
-            ? pathname === '/'
-            : pathname.startsWith(item.href);
+        {/* Navigation */}
+        <nav className="flex-1 p-4 space-y-1">
+          {NAV_ITEMS.map((item) => {
+            const isActive = item.href === '/'
+              ? pathname === '/'
+              : pathname.startsWith(item.href);
 
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
-                isActive
-                  ? 'bg-gray-800 text-white'
-                  : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800/50'
-              )}
-            >
-              {item.icon}
-              {item.label}
-            </Link>
-          );
-        })}
-      </nav>
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={close}
+                className={cn(
+                  'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
+                  isActive
+                    ? 'bg-gray-800 text-white border-l-2 border-blue-500 pl-[10px]'
+                    : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800/50'
+                )}
+              >
+                {item.icon}
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
 
-      {/* Footer */}
-      <div className="p-4 border-t border-gray-800">
-        <div className="flex items-center gap-2 text-xs text-gray-600">
-          <span className="w-2 h-2 rounded-full bg-emerald-500" />
-          Mock Data Active
+        {/* Footer */}
+        <div className="p-4 border-t border-gray-800">
+          <div className="flex items-center gap-2 text-xs text-gray-400">
+            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            Mock Data Active
+          </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 }

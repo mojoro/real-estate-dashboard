@@ -13,7 +13,7 @@ export function ListingCard({ listing, onClick }: ListingCardProps) {
   return (
     <button
       onClick={onClick}
-      className="bg-gray-900 border border-gray-800 rounded-xl p-5 text-left hover:border-gray-700 transition-colors w-full cursor-pointer"
+      className="group bg-gray-900 border border-gray-800 rounded-xl p-5 text-left hover:border-gray-700 transition-colors w-full cursor-pointer"
     >
       <div className="flex items-start justify-between mb-3">
         <StatusBadge status={listing.status} />
@@ -26,11 +26,11 @@ export function ListingCard({ listing, onClick }: ListingCardProps) {
 
       <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 mt-3 text-xs">
         <div>
-          <span className="text-gray-500">Preis</span>
+          <span className="text-gray-400">Preis</span>
           <p className="text-white font-medium">{formatPrice(listing.purchase_price)}</p>
         </div>
         <div>
-          <span className="text-gray-500">Rendite</span>
+          <span className="text-gray-400">Rendite</span>
           <p>
             <YieldDisplay
               yieldPct={listing.yield_pct}
@@ -40,11 +40,11 @@ export function ListingCard({ listing, onClick }: ListingCardProps) {
           </p>
         </div>
         <div>
-          <span className="text-gray-500">Fläche</span>
+          <span className="text-gray-400">Fläche</span>
           <p className="text-white font-medium">{formatArea(listing.living_area)}</p>
         </div>
         <div>
-          <span className="text-gray-500">Zimmer</span>
+          <span className="text-gray-400">Zimmer</span>
           <p className="text-white font-medium">{listing.rooms ?? '—'}</p>
         </div>
       </div>
@@ -55,13 +55,13 @@ export function ListingCard({ listing, onClick }: ListingCardProps) {
         </p>
       )}
 
-      <div className="mt-3 pt-3 border-t border-gray-800 flex items-center justify-between">
-        <span className="text-xs text-gray-600">
+      <div className="mt-3 pt-3 border-t border-gray-700 flex items-center justify-between">
+        <span className="text-xs text-gray-400">
           {listing.listing_id.split('_')[0] === listing.listing_id
             ? 'ImmoScout24'
             : listing.listing_id.split('_')[0]}
         </span>
-        <span className="text-xs text-blue-400 font-medium">Details &rarr;</span>
+        <span className="text-xs text-blue-400 group-hover:text-blue-300 font-medium transition-colors">Details &rarr;</span>
       </div>
     </button>
   );

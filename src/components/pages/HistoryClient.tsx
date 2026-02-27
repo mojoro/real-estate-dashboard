@@ -63,7 +63,7 @@ export function HistoryClient({ listings }: HistoryClientProps) {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatsCard label="Gesamt" value={stats.total} />
         <StatsCard label="GO" value={stats.go} color="emerald" />
         <StatsCard label="PRÜFEN" value={stats.pruefen} color="amber" />

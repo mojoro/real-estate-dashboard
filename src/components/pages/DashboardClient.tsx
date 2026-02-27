@@ -42,7 +42,7 @@ export function DashboardClient({ listings, stats, topPicks }: DashboardClientPr
       </div>
 
       {/* Stats Bar */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         <StatsCard label="Heute analysiert" value={stats.totalToday} />
         <StatsCard label="GO" value={stats.goCount} color="emerald" />
         <StatsCard label="PRÜFEN" value={stats.pruefenCount} color="amber" />
